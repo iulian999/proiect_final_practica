@@ -5,7 +5,7 @@ namespace PecoManager.Data
     public static class DatabaseHelper
     {
         public static string ConnectionString =
-            @"Server=localhost\SQLEXPRESS;Database=PecoDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            @"Server=IULIC\SQLEXPRESS;Database=PecoDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         public static bool TestConnection()
         {
@@ -15,7 +15,12 @@ namespace PecoManager.Data
                 conn.Open();
                 return true;
             }
-            catch { return false; }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare conexiune: " + ex.Message, "PecoManager",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
     }
 }
