@@ -1,4 +1,5 @@
 using PecoManager.Data;
+using PecoManager.Forms;
 
 namespace PecoManager
 {
@@ -8,12 +9,7 @@ namespace PecoManager
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-
-            if (DatabaseHelper.TestConnection())
-                MessageBox.Show("Conexiune la PecoDB reușită!", "PecoManager",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            Application.Run(new Form1());
+            Application.Run(new FormMain());
         }
     }
 }
