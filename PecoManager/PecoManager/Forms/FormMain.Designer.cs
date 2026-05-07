@@ -2,30 +2,14 @@
 {
     partial class FormMain
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             menuStrip1 = new MenuStrip();
@@ -33,7 +17,10 @@
             combustibiliToolStripMenuItem = new ToolStripMenuItem();
             tranzacțiiToolStripMenuItem = new ToolStripMenuItem();
             rapoarteToolStripMenuItem = new ToolStripMenuItem();
+            dataGridViewStatii = new DataGridView();
+            lblTitlu = new Label();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewStatii).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -42,9 +29,9 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { stațiiPECOToolStripMenuItem, combustibiliToolStripMenuItem, tranzacțiiToolStripMenuItem, rapoarteToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 28);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(1029, 30);
             menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
             // 
             // stațiiPECOToolStripMenuItem
             // 
@@ -74,28 +61,57 @@
             rapoarteToolStripMenuItem.Text = "Rapoarte";
             rapoarteToolStripMenuItem.Click += rapoarteToolStripMenuItem_Click;
             // 
+            // dataGridViewStatii
+            // 
+            dataGridViewStatii.AllowUserToAddRows = false;
+            dataGridViewStatii.AllowUserToDeleteRows = false;
+            dataGridViewStatii.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewStatii.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewStatii.Location = new Point(14, 93);
+            dataGridViewStatii.Margin = new Padding(3, 4, 3, 4);
+            dataGridViewStatii.Name = "dataGridViewStatii";
+            dataGridViewStatii.ReadOnly = true;
+            dataGridViewStatii.RowHeadersVisible = false;
+            dataGridViewStatii.RowHeadersWidth = 51;
+            dataGridViewStatii.Size = new Size(983, 533);
+            dataGridViewStatii.TabIndex = 1;
+            // 
+            // lblTitlu
+            // 
+            lblTitlu.AutoSize = true;
+            lblTitlu.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTitlu.Location = new Point(14, 47);
+            lblTitlu.Name = "lblTitlu";
+            lblTitlu.Size = new Size(229, 32);
+            lblTitlu.TabIndex = 0;
+            lblTitlu.Text = "Stații PECO — Listă";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1029, 667);
+            Controls.Add(lblTitlu);
+            Controls.Add(dataGridViewStatii);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormMain";
-            Text = "PecoManager — Sistem de gestionare stații PECO\n";
             Load += FormMain_Load;
+            Text = "PecoManager — Sistem de gestionare stații PECO";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewStatii).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-
-        #endregion
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem stațiiPECOToolStripMenuItem;
         private ToolStripMenuItem combustibiliToolStripMenuItem;
         private ToolStripMenuItem tranzacțiiToolStripMenuItem;
         private ToolStripMenuItem rapoarteToolStripMenuItem;
+        private DataGridView dataGridViewStatii;
+        private Label lblTitlu;
     }
 }
