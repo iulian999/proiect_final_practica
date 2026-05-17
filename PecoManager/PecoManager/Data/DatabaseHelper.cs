@@ -209,5 +209,26 @@ namespace PecoManager.Data
             }
             return list;
         }
+
+
+
+        public static bool StatiaAreTranzactii(int idStatie)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM Tranzactie WHERE IdStatie=@IdStatie";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdStatie", idStatie);
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare verificare tranzacții: " + ex.Message);
+                return false;
+            }
+        }
     }
 }

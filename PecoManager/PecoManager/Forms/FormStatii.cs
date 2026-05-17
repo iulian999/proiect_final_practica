@@ -83,9 +83,26 @@ namespace PecoManager.Forms
 
             if (confirmare == DialogResult.Yes)
             {
+                if (DatabaseHelper.StatiaAreTranzactii(statie.IdStatie))
+                {
+                    MessageBox.Show(
+                        $"Stația '{statie.Denumire}' nu poate fi ștearsă deoarece are tranzacții asociate!",
+                        "Ștergere imposibilă",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
                 DatabaseHelper.DeleteStatie(statie.IdStatie);
                 IncarcaStatii();
             }
         }
+
+        private void txtCautare_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                btnCauta_Click(sender, e);
+        }
+
+
     }
 }

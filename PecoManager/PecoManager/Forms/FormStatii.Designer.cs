@@ -33,6 +33,7 @@
             txtCautare.Location = new Point(12, 55);
             txtCautare.PlaceholderText = "Caută după denumire sau oraș...";
             txtCautare.Size = new Size(350, 23);
+            txtCautare.KeyPress += txtCautare_KeyPress;
 
             // btnCauta
             btnCauta.Location = new Point(370, 54);
