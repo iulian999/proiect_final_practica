@@ -111,5 +111,103 @@ namespace PecoManager.Data
             }
             return list;
         }
+
+        public static void AddStatie(StatiePeco s)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"INSERT INTO StatiePeco 
+                    (Denumire, Adresa, Oras, NrPompe, Status) 
+                    VALUES (@Denumire, @Adresa, @Oras, @NrPompe, @Status)";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Denumire", s.Denumire);
+                cmd.Parameters.AddWithValue("@Adresa", s.Adresa);
+                cmd.Parameters.AddWithValue("@Oras", s.Oras);
+                cmd.Parameters.AddWithValue("@NrPompe", s.NrPompe);
+                cmd.Parameters.AddWithValue("@Status", s.Status);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare AddStatie: " + ex.Message);
+            }
+        }
+
+        public static void UpdateStatie(StatiePeco s)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"UPDATE StatiePeco 
+                    SET Denumire=@Denumire, Adresa=@Adresa, Oras=@Oras, 
+                        NrPompe=@NrPompe, Status=@Status 
+                    WHERE IdStatie=@IdStatie";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Denumire", s.Denumire);
+                cmd.Parameters.AddWithValue("@Adresa", s.Adresa);
+                cmd.Parameters.AddWithValue("@Oras", s.Oras);
+                cmd.Parameters.AddWithValue("@NrPompe", s.NrPompe);
+                cmd.Parameters.AddWithValue("@Status", s.Status);
+                cmd.Parameters.AddWithValue("@IdStatie", s.IdStatie);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare UpdateStatie: " + ex.Message);
+            }
+        }
+
+        public static void DeleteStatie(int id)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = "DELETE FROM StatiePeco WHERE IdStatie=@IdStatie";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdStatie", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare DeleteStatie: " + ex.Message);
+            }
+        }
+
+        public static List<StatiePeco> SearchStatii(string termen)
+        {
+            List<StatiePeco> list = new List<StatiePeco>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"SELECT IdStatie, Denumire, Adresa, Oras, NrPompe, Status 
+                    FROM StatiePeco 
+                    WHERE Denumire LIKE @Termen OR Oras LIKE @Termen";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Termen", "%" + termen + "%");
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new StatiePeco
+                    {
+                        IdStatie = reader.GetInt32(0),
+                        Denumire = reader.GetString(1),
+                        Adresa = reader.GetString(2),
+                        Oras = reader.GetString(3),
+                        NrPompe = reader.GetInt32(4),
+                        Status = reader.GetString(5)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare SearchStatii: " + ex.Message);
+            }
+            return list;
+        }
     }
 }
