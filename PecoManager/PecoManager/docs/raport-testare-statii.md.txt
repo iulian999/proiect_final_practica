@@ -1,0 +1,17 @@
+# Raport Testare — Modulul Stații PECO
+
+## Operații testate
+
+| Test | Rezultat | Observații |
+|---|---|---|
+| Adăugare stație nouă | ✅ Trecut | Stația apare în tabel după salvare |
+| Modificare stație existentă | ✅ Trecut | Datele se actualizează corect în BD |
+| Ștergere cu confirmare | ✅ Trecut | MessageBox confirmare funcționează |
+| Căutare după denumire | ✅ Trecut | Filtrare corectă în DataGridView |
+| Căutare după oraș | ✅ Trecut | Rezultate corecte returnate |
+| Validare câmpuri goale | ✅ Trecut | MessageBox eroare afișat corect |
+| Ștergere stație cu tranzacții | ✅ Trecut | Blocat cu mesaj de avertizare |
+
+## Concluzie
+Modulul Stații PECO funcționează complet și corect.
+Toate cele 7 scenarii de test au trecut cu succes.
