@@ -43,6 +43,12 @@ namespace PecoManager.Forms
             dataGridView.DataSource = rezultate;
         }
 
+        private void cmbFiltruTip_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                btnFiltreaza_Click(sender, e);
+        }
+
         private void btnAdauga_Click(object sender, EventArgs e)
         {
             FormCombustibilEdit form = new FormCombustibilEdit();

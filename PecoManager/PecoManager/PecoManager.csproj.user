@@ -4,10 +4,10 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\Form1.cs">
+    <Compile Update="Forms\FormCombustibil.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FormCombustibil.cs">
+    <Compile Update="Forms\FormCombustibilEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\FormMain.cs">

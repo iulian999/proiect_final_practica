@@ -35,6 +35,7 @@
             cmbFiltruTip.SelectedIndex = 0;
             cmbFiltruTip.Location = new Point(12, 55);
             cmbFiltruTip.Size = new Size(150, 23);
+            cmbFiltruTip.KeyPress += cmbFiltruTip_KeyPress;
 
             // btnFiltreaza
             btnFiltreaza.Location = new Point(172, 54);
