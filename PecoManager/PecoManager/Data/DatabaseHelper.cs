@@ -210,8 +210,6 @@ namespace PecoManager.Data
             return list;
         }
 
-
-
         public static bool StatiaAreTranzactii(int idStatie)
         {
             try
@@ -227,6 +225,117 @@ namespace PecoManager.Data
             catch (Exception ex)
             {
                 MessageBox.Show("Eroare verificare tranzacții: " + ex.Message);
+                return false;
+            }
+        }
+
+        // ── COMBUSTIBIL ──────────────────────────────────────────────
+
+        public static void AddCombustibil(Combustibil c)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"INSERT INTO Combustibil 
+                    (Tip, PretPerLitru, StocLitri) 
+                    VALUES (@Tip, @PretPerLitru, @StocLitri)";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Tip", c.Tip);
+                cmd.Parameters.AddWithValue("@PretPerLitru", c.PretPerLitru);
+                cmd.Parameters.AddWithValue("@StocLitri", c.StocLitri);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare AddCombustibil: " + ex.Message);
+            }
+        }
+
+        public static void UpdateCombustibil(Combustibil c)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"UPDATE Combustibil 
+                    SET Tip=@Tip, PretPerLitru=@PretPerLitru, StocLitri=@StocLitri 
+                    WHERE IdCombustibil=@IdCombustibil";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Tip", c.Tip);
+                cmd.Parameters.AddWithValue("@PretPerLitru", c.PretPerLitru);
+                cmd.Parameters.AddWithValue("@StocLitri", c.StocLitri);
+                cmd.Parameters.AddWithValue("@IdCombustibil", c.IdCombustibil);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare UpdateCombustibil: " + ex.Message);
+            }
+        }
+
+        public static void DeleteCombustibil(int id)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = "DELETE FROM Combustibil WHERE IdCombustibil=@IdCombustibil";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdCombustibil", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare DeleteCombustibil: " + ex.Message);
+            }
+        }
+
+        public static List<Combustibil> FilterCombustibili(string tip)
+        {
+            List<Combustibil> list = new List<Combustibil>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"SELECT IdCombustibil, Tip, PretPerLitru, StocLitri 
+                    FROM Combustibil WHERE Tip LIKE @Tip";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Tip", "%" + tip + "%");
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new Combustibil
+                    {
+                        IdCombustibil = reader.GetInt32(0),
+                        Tip = reader.GetString(1),
+                        PretPerLitru = reader.GetDecimal(2),
+                        StocLitri = reader.GetDecimal(3)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare FilterCombustibili: " + ex.Message);
+            }
+            return list;
+        }
+
+        public static bool CombustibilAreTranzactii(int idCombustibil)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM Tranzactie WHERE IdCombustibil=@IdCombustibil";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdCombustibil", idCombustibil);
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare verificare tranzacții combustibil: " + ex.Message);
                 return false;
             }
         }
