@@ -46,10 +46,7 @@ namespace PecoManager.Data
                     });
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare GetAllStatii: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetAllStatii: " + ex.Message); }
             return list;
         }
 
@@ -74,10 +71,7 @@ namespace PecoManager.Data
                     });
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare GetAllCombustibili: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetAllCombustibili: " + ex.Message); }
             return list;
         }
 
@@ -105,10 +99,7 @@ namespace PecoManager.Data
                     });
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare GetAllTranzactii: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetAllTranzactii: " + ex.Message); }
             return list;
         }
 
@@ -118,8 +109,7 @@ namespace PecoManager.Data
             {
                 using var conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                string query = @"INSERT INTO StatiePeco 
-                    (Denumire, Adresa, Oras, NrPompe, Status) 
+                string query = @"INSERT INTO StatiePeco (Denumire, Adresa, Oras, NrPompe, Status) 
                     VALUES (@Denumire, @Adresa, @Oras, @NrPompe, @Status)";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Denumire", s.Denumire);
@@ -129,10 +119,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@Status", s.Status);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare AddStatie: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare AddStatie: " + ex.Message); }
         }
 
         public static void UpdateStatie(StatiePeco s)
@@ -142,8 +129,7 @@ namespace PecoManager.Data
                 using var conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 string query = @"UPDATE StatiePeco 
-                    SET Denumire=@Denumire, Adresa=@Adresa, Oras=@Oras, 
-                        NrPompe=@NrPompe, Status=@Status 
+                    SET Denumire=@Denumire, Adresa=@Adresa, Oras=@Oras, NrPompe=@NrPompe, Status=@Status 
                     WHERE IdStatie=@IdStatie";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Denumire", s.Denumire);
@@ -154,10 +140,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@IdStatie", s.IdStatie);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare UpdateStatie: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare UpdateStatie: " + ex.Message); }
         }
 
         public static void DeleteStatie(int id)
@@ -171,10 +154,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@IdStatie", id);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare DeleteStatie: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare DeleteStatie: " + ex.Message); }
         }
 
         public static List<StatiePeco> SearchStatii(string termen)
@@ -185,8 +165,7 @@ namespace PecoManager.Data
                 using var conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 string query = @"SELECT IdStatie, Denumire, Adresa, Oras, NrPompe, Status 
-                    FROM StatiePeco 
-                    WHERE Denumire LIKE @Termen OR Oras LIKE @Termen";
+                    FROM StatiePeco WHERE Denumire LIKE @Termen OR Oras LIKE @Termen";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Termen", "%" + termen + "%");
                 using var reader = cmd.ExecuteReader();
@@ -203,10 +182,7 @@ namespace PecoManager.Data
                     });
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare SearchStatii: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare SearchStatii: " + ex.Message); }
             return list;
         }
 
@@ -219,14 +195,9 @@ namespace PecoManager.Data
                 string query = "SELECT COUNT(*) FROM Tranzactie WHERE IdStatie=@IdStatie";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IdStatie", idStatie);
-                int count = (int)cmd.ExecuteScalar();
-                return count > 0;
+                return (int)cmd.ExecuteScalar() > 0;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare verificare tranzacții: " + ex.Message);
-                return false;
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare verificare tranzacții: " + ex.Message); return false; }
         }
 
         // ── COMBUSTIBIL ──────────────────────────────────────────────
@@ -237,8 +208,7 @@ namespace PecoManager.Data
             {
                 using var conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                string query = @"INSERT INTO Combustibil 
-                    (Tip, PretPerLitru, StocLitri) 
+                string query = @"INSERT INTO Combustibil (Tip, PretPerLitru, StocLitri) 
                     VALUES (@Tip, @PretPerLitru, @StocLitri)";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Tip", c.Tip);
@@ -246,10 +216,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@StocLitri", c.StocLitri);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare AddCombustibil: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare AddCombustibil: " + ex.Message); }
         }
 
         public static void UpdateCombustibil(Combustibil c)
@@ -268,10 +235,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@IdCombustibil", c.IdCombustibil);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare UpdateCombustibil: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare UpdateCombustibil: " + ex.Message); }
         }
 
         public static void DeleteCombustibil(int id)
@@ -285,10 +249,7 @@ namespace PecoManager.Data
                 cmd.Parameters.AddWithValue("@IdCombustibil", id);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare DeleteCombustibil: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare DeleteCombustibil: " + ex.Message); }
         }
 
         public static List<Combustibil> FilterCombustibili(string tip)
@@ -298,8 +259,7 @@ namespace PecoManager.Data
             {
                 using var conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                string query = @"SELECT IdCombustibil, Tip, PretPerLitru, StocLitri 
-                    FROM Combustibil WHERE Tip LIKE @Tip";
+                string query = "SELECT IdCombustibil, Tip, PretPerLitru, StocLitri FROM Combustibil WHERE Tip LIKE @Tip";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Tip", "%" + tip + "%");
                 using var reader = cmd.ExecuteReader();
@@ -314,10 +274,7 @@ namespace PecoManager.Data
                     });
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eroare FilterCombustibili: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Eroare FilterCombustibili: " + ex.Message); }
             return list;
         }
 
@@ -330,14 +287,147 @@ namespace PecoManager.Data
                 string query = "SELECT COUNT(*) FROM Tranzactie WHERE IdCombustibil=@IdCombustibil";
                 using var cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IdCombustibil", idCombustibil);
-                int count = (int)cmd.ExecuteScalar();
-                return count > 0;
+                return (int)cmd.ExecuteScalar() > 0;
             }
-            catch (Exception ex)
+            catch (Exception ex) { MessageBox.Show("Eroare verificare tranzacții combustibil: " + ex.Message); return false; }
+        }
+
+        // ── TRANZACTII ──────────────────────────────────────────────
+
+        public static void AddTranzactie(Tranzactie t)
+        {
+            try
             {
-                MessageBox.Show("Eroare verificare tranzacții combustibil: " + ex.Message);
-                return false;
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"INSERT INTO Tranzactie 
+                    (IdStatie, IdCombustibil, DataOra, CantitateaLitri, SumaTotala, ModPlata) 
+                    VALUES (@IdStatie, @IdCombustibil, @DataOra, @CantitateaLitri, @SumaTotala, @ModPlata)";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdStatie", t.IdStatie);
+                cmd.Parameters.AddWithValue("@IdCombustibil", t.IdCombustibil);
+                cmd.Parameters.AddWithValue("@DataOra", t.DataOra);
+                cmd.Parameters.AddWithValue("@CantitateaLitri", t.CantitateaLitri);
+                cmd.Parameters.AddWithValue("@SumaTotala", t.SumaTotala);
+                cmd.Parameters.AddWithValue("@ModPlata", t.ModPlata);
+                cmd.ExecuteNonQuery();
             }
+            catch (Exception ex) { MessageBox.Show("Eroare AddTranzactie: " + ex.Message); }
+        }
+
+        public static void DeleteTranzactie(int id)
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = "DELETE FROM Tranzactie WHERE IdTranzactie=@IdTranzactie";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdTranzactie", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { MessageBox.Show("Eroare DeleteTranzactie: " + ex.Message); }
+        }
+
+        public static List<Tranzactie> GetTranzactiiByStatie(int idStatie)
+        {
+            List<Tranzactie> list = new List<Tranzactie>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"SELECT IdTranzactie, IdStatie, IdCombustibil, 
+                    DataOra, CantitateaLitri, SumaTotala, ModPlata 
+                    FROM Tranzactie WHERE IdStatie=@IdStatie ORDER BY DataOra DESC";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdStatie", idStatie);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new Tranzactie
+                    {
+                        IdTranzactie = reader.GetInt32(0),
+                        IdStatie = reader.GetInt32(1),
+                        IdCombustibil = reader.GetInt32(2),
+                        DataOra = reader.GetDateTime(3),
+                        CantitateaLitri = reader.GetDecimal(4),
+                        SumaTotala = reader.GetDecimal(5),
+                        ModPlata = reader.GetString(6)
+                    });
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetTranzactiiByStatie: " + ex.Message); }
+            return list;
+        }
+
+        public static List<TranzactieDetalii> GetTranzactiiCuDetalii()
+        {
+            List<TranzactieDetalii> list = new List<TranzactieDetalii>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"
+                    SELECT t.IdTranzactie, s.Denumire, c.Tip, 
+                           t.DataOra, t.CantitateaLitri, t.SumaTotala, t.ModPlata
+                    FROM Tranzactie t
+                    JOIN StatiePeco s ON t.IdStatie = s.IdStatie
+                    JOIN Combustibil c ON t.IdCombustibil = c.IdCombustibil
+                    ORDER BY t.DataOra DESC";
+                using var cmd = new SqlCommand(query, conn);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new TranzactieDetalii
+                    {
+                        IdTranzactie = reader.GetInt32(0),
+                        DenumireStatie = reader.GetString(1),
+                        TipCombustibil = reader.GetString(2),
+                        DataOra = reader.GetDateTime(3),
+                        CantitateaLitri = reader.GetDecimal(4),
+                        SumaTotala = reader.GetDecimal(5),
+                        ModPlata = reader.GetString(6)
+                    });
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetTranzactiiCuDetalii: " + ex.Message); }
+            return list;
+        }
+
+        public static List<TranzactieDetalii> GetTranzactiiCuDetaliiByStatie(int idStatie)
+        {
+            List<TranzactieDetalii> list = new List<TranzactieDetalii>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"
+                    SELECT t.IdTranzactie, s.Denumire, c.Tip,
+                           t.DataOra, t.CantitateaLitri, t.SumaTotala, t.ModPlata
+                    FROM Tranzactie t
+                    JOIN StatiePeco s ON t.IdStatie = s.IdStatie
+                    JOIN Combustibil c ON t.IdCombustibil = c.IdCombustibil
+                    WHERE t.IdStatie = @IdStatie
+                    ORDER BY t.DataOra DESC";
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdStatie", idStatie);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new TranzactieDetalii
+                    {
+                        IdTranzactie = reader.GetInt32(0),
+                        DenumireStatie = reader.GetString(1),
+                        TipCombustibil = reader.GetString(2),
+                        DataOra = reader.GetDateTime(3),
+                        CantitateaLitri = reader.GetDecimal(4),
+                        SumaTotala = reader.GetDecimal(5),
+                        ModPlata = reader.GetString(6)
+                    });
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Eroare GetTranzactiiCuDetaliiByStatie: " + ex.Message); }
+            return list;
         }
     }
 }
