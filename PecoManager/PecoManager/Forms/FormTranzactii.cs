@@ -86,7 +86,10 @@ namespace PecoManager.Forms
                 MessageBox.Show($"Stația '{statie.Denumire}' este inactivă! Selectați altă stație.",
                     "Stație inactivă", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbStatie.SelectedIndex = -1;
+                return;
             }
+            txtData.Text = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+            CalculeazaSuma();
         }
 
         private void btnInregistreaza_Click(object sender, EventArgs e)
