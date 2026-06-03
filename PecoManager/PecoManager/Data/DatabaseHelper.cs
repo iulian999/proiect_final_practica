@@ -429,5 +429,87 @@ namespace PecoManager.Data
             catch (Exception ex) { MessageBox.Show("Eroare GetTranzactiiCuDetaliiByStatie: " + ex.Message); }
             return list;
         }
+
+        // ── RAPORT ──────────────────────────────────────────────
+
+        public static List<RaportStatie> GetRaportStatii()
+        {
+            List<RaportStatie> list = new List<RaportStatie>();
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                string query = @"
+                    SELECT s.Denumire, s.Oras,
+                           COUNT(t.IdTranzactie) AS NrTranzactii,
+                           ISNULL(SUM(t.SumaTotala), 0) AS TotalIncasat
+                    FROM StatiePeco s
+                    LEFT JOIN Tranzactie t ON s.IdStatie = t.IdStatie
+                    GROUP BY s.Denumire, s.Oras
+                    ORDER BY TotalIncasat DESC";
+                using var cmd = new SqlCommand(query, conn);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new RaportStatie
+                    {
+                        DenumireStatie = reader.GetString(0),
+                        Oras = reader.GetString(1),
+                        NrTranzactii = reader.GetInt32(2),
+                        TotalIncasat = reader.GetDecimal(3)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare GetRaportStatii: " + ex.Message);
+            }
+            return list;
+        }
+
+        public static (int totalTranzactii, decimal totalIncasat,
+                       decimal medieTranzactie, string statieTop) GetStatisticiGenerale()
+        {
+            try
+            {
+                using var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+
+                // Total tranzacții și sumă totală
+                string q1 = "SELECT COUNT(*), ISNULL(SUM(SumaTotala), 0) FROM Tranzactie";
+                using var cmd1 = new SqlCommand(q1, conn);
+                using var r1 = cmd1.ExecuteReader();
+                int totalTranzactii = 0;
+                decimal totalIncasat = 0;
+                if (r1.Read())
+                {
+                    totalTranzactii = r1.GetInt32(0);
+                    totalIncasat = r1.GetDecimal(1);
+                }
+                r1.Close();
+
+                // Media per tranzacție
+                decimal medie = totalTranzactii > 0 ? totalIncasat / totalTranzactii : 0;
+
+                // Stația cu cele mai multe tranzacții
+                string q2 = @"
+                    SELECT TOP 1 s.Denumire
+                    FROM StatiePeco s
+                    JOIN Tranzactie t ON s.IdStatie = t.IdStatie
+                    GROUP BY s.Denumire
+                    ORDER BY COUNT(t.IdTranzactie) DESC";
+                using var cmd2 = new SqlCommand(q2, conn);
+                var rezultat = cmd2.ExecuteScalar();
+                string statieTop = rezultat != null ? rezultat.ToString()! : "N/A";
+
+                return (totalTranzactii, totalIncasat, medie, statieTop);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare GetStatisticiGenerale: " + ex.Message);
+                return (0, 0, 0, "N/A");
+            }
+        }
+
     }
 }
