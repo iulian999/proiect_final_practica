@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PecoManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea934192f6e64e80602bc5ca2635a169f0eb32a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc1f94f7d9875fa26fba921cbf8002018892654d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PecoManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PecoManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
